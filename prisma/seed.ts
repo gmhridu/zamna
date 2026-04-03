@@ -1,0 +1,371 @@
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+const categories = [
+  { name: 'Domestic Sewing Machine', slug: 'domestic-sewing-machine' },
+  { name: 'Industrial Machine', slug: 'industrial-machine' },
+  { name: 'Needles & Motors', slug: 'needles-motors' },
+  { name: 'Accessories', slug: 'accessories' },
+];
+
+const products = [
+  // Domestic Sewing Machines
+  {
+    title: 'A-Roma Double Chaal',
+    slug: 'a-roma-double-chaal',
+    sku: 'AROMA-DC',
+    price: 17000,
+    description: 'Heavy-duty domestic sewing machine with double chain stitch capability. Perfect for thick fabrics and leatherwork.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/a-roma-double-chaal.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: true,
+  },
+  {
+    title: 'One Star JH',
+    slug: 'one-star-jh',
+    sku: 'ONESTAR-JH',
+    price: 4999,
+    description: 'Vintage-style mechanical sewing machine. Ideal for basic stitching and small repairs at home.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/one-star-jh.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  {
+    title: 'One Star New Model',
+    slug: 'one-star-new-model',
+    sku: 'ONESTAR-NM',
+    price: 16000,
+    description: 'Electric sewing machine with adjustable speed control. Features multiple stitch patterns for versatile sewing.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/one-star-new-model.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket 565 Multifunction Machine',
+    slug: 'rocket-565-multifunction-machine',
+    sku: 'ROCKET-565',
+    price: 50000,
+    description: 'Computerized sewing machine with 565 built-in stitches. LCD display, automatic needle threader, and speed control.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-565-multifunction-machine.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket Double Chaal',
+    slug: 'rocket-double-chaal',
+    sku: 'ROCKET-DC',
+    price: 15000,
+    description: 'Traditional double-stitch sewing machine. Built with durable metal frame for long-lasting performance.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-double-chaal.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  {
+    title: 'Rocket Link Motion',
+    slug: 'rocket-link-motion',
+    sku: 'ROCKET-LM',
+    price: 30000,
+    description: 'Mechanical machine on wooden base with link motion technology. Smooth and consistent stitch quality.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-link-motion.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket Link Motion Super Model',
+    slug: 'rocket-link-motion-super-model',
+    sku: 'ROCKET-LMSM',
+    price: 19000,
+    description: 'High-end link-motion machine in white finish. Advanced feed system for professional results.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-link-motion-super-model.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  {
+    title: 'Rocket New Model',
+    slug: 'rocket-new-model',
+    sku: 'ROCKET-NM',
+    price: 14000,
+    description: 'Classic domestic sewing machine with wooden base. Reliable performance for everyday sewing needs.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-new-model.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  {
+    title: 'Rocket Pfaff Model',
+    slug: 'rocket-pfaff-model',
+    sku: 'ROCKET-PFAFF',
+    price: 13000,
+    description: 'Vintage Pfaff-style sewing machine with original design. Great for decorative stitching and quilting.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-pfaff-model.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  {
+    title: 'Sattar Double Chaal',
+    slug: 'sattar-double-chaal',
+    sku: 'SATTAR-DC',
+    price: 18000,
+    description: 'Durable double-stitch domestic machine. Extra-strong frame suitable for heavy fabrics and canvas.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/sattar-double-chaal.jpg',
+    categorySlug: 'domestic-sewing-machine',
+    featured: false,
+  },
+  // Industrial Machines
+  {
+    title: 'Rocket Overlock & Pico 747',
+    slug: 'rocket-overlock-and-pico-machine-747',
+    sku: 'ROCKET-747',
+    price: 100000,
+    description: '4-thread overlock & picotstitch machine. High-speed 7000 RPM, differential feed, and adjustable stitch length.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-overlock-and-pico-machine-747.jpg',
+    categorySlug: 'industrial-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket Industrial Machine A5',
+    slug: 'rocket-industrial-machine-a5',
+    sku: 'ROCKET-A5',
+    price: 70000,
+    description: 'Straight-stitch industrial machine. Direct drive motor, 550W power, max speed 4500 stitches/min.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-industrial-machine-a5.jpg',
+    categorySlug: 'industrial-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket Industrial Machine A8',
+    slug: 'rocket-industrial-machine-a8',
+    sku: 'ROCKET-A8',
+    price: 80000,
+    description: 'High-speed industrial sewing machine. Advanced feed mechanism, automatic lubrication, and LED work light.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-industrial-machine-a8.jpg',
+    categorySlug: 'industrial-machine',
+    featured: true,
+  },
+  {
+    title: 'Rocket Industrial Machine H8',
+    slug: 'rocket-industrial-machine-h8',
+    sku: 'ROCKET-H8',
+    price: 60000,
+    description: 'Industrial machine with heavy-duty motor. Built for continuous operation in factory environments.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-industrial-machine-h8.jpg',
+    categorySlug: 'industrial-machine',
+    featured: false,
+  },
+  {
+    title: 'Rocket Industrial Machine 8700D',
+    slug: 'rocket-industrial-machine-8700d',
+    sku: 'ROCKET-8700D',
+    price: 40000,
+    description: 'Standard industrial lockstitch machine. Reliable performance for garment manufacturing.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-industrial-machine-8700d.jpg',
+    categorySlug: 'industrial-machine',
+    featured: false,
+  },
+  // Needles & Motors
+  {
+    title: 'One Star Sewing Machine Motor',
+    slug: 'one-star-sewing-machine-motor',
+    sku: 'ONESTAR-M150',
+    price: 1800,
+    description: '150W motor unit for domestic machines. Comes with foot pedal switch and mounting bracket.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/one-star-sewing-machine-motor.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'One Star Sewing Needles',
+    slug: 'one-star-sewing-needles',
+    sku: 'ONESTAR-NS',
+    price: 3500,
+    description: 'Pack of sewing needles in various sizes. Compatible with most domestic sewing machines.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/one-star-sewing-needles.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Sewing Needles',
+    slug: 'rocket-sewing-needles',
+    sku: 'ROCKET-NS',
+    price: 1200,
+    description: 'Industrial sewing needles (pack of 12). Chrome-plated for durability and smooth fabric penetration.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-sewing-needles.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Industrial Needles',
+    slug: 'rocket-industrial-needles',
+    sku: 'ROCKET-INDNS',
+    price: 860,
+    description: 'Heavy-duty needles for thick fabrics (pack of 12). Designed for leather, denim, and canvas.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-industrial-needles.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Sewing Motor 150W',
+    slug: 'rocket-sewing-machine-motor-150-watt',
+    sku: 'ROCKET-M150',
+    price: 1766,
+    description: '150W sewing machine motor with foot switch. Universal fit for most domestic machines.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-sewing-machine-motor-150-watt.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Sewing Motor HF-67 150W',
+    slug: 'rocket-hf-67-150-watt',
+    sku: 'ROCKET-HF67-150',
+    price: 1799,
+    description: '150W motor (HF-67 series). Compact design with quiet operation and smooth speed control.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-hf-67-150-watt.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Sewing Motor HF-69 150W',
+    slug: 'rocket-hf-69-150-watt',
+    sku: 'ROCKET-HF69-150',
+    price: 5999,
+    description: '150W motor (HF-69 series, slot type). High torque with electronic speed regulator.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-hf-69-150-watt.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  {
+    title: 'Rocket Sewing Motor HF-71 250W',
+    slug: 'rocket-hf-71-250-watt',
+    sku: 'ROCKET-HF71-250',
+    price: 7999,
+    description: 'High-torque 250W sewing motor. Ideal for industrial applications requiring extra power.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-hf-71-250-watt.jpg',
+    categorySlug: 'needles-motors',
+    featured: true,
+  },
+  {
+    title: 'Rocket Sewing Motor HF-69 180W',
+    slug: 'rocket-hf-69-180-watt',
+    sku: 'ROCKET-HF69-180',
+    price: 3700,
+    description: '180W heavy-duty sewing motor. Enhanced cooling system for extended operation.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/rocket-hf-69-180-watt.jpg',
+    categorySlug: 'needles-motors',
+    featured: false,
+  },
+  // Accessories
+  {
+    title: 'Cover Farmeeka',
+    slug: 'cover-farmeeka',
+    sku: 'COV-FARMEKA',
+    price: 4600,
+    description: 'Quilted dark-brown fabric cover for domestic sewing machines. Protects from dust and damage.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-farmeeka.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'Cover Farmeeka SP',
+    slug: 'cover-farmeeka-sp',
+    sku: 'COV-FARMEKA-SP',
+    price: 3500,
+    description: 'Lighter gray-striped fabric cover for domestic machines. Easy to clean and maintain.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-farmeeka-sp.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'Cover Farmeeka SP Grey',
+    slug: 'cover-farmeeka-sp-grey',
+    sku: 'COV-FARMEKA-GR',
+    price: 6500,
+    description: 'Premium gray fabric cover with extra padding. Superior dust protection for your machine.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-farmeeka-sp-grey.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'Cover Iron Steel',
+    slug: 'cover-iron-steel',
+    sku: 'COV-IRON',
+    price: 5500,
+    description: 'Heavy-duty iron and steel cover for industrial sewing machines. Maximum durability.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-iron-steel.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'Cover Wood Dark Brown',
+    slug: 'cover-wood-dark-brown',
+    sku: 'COV-WOOD-DB',
+    price: 1499,
+    description: 'Dark wooden tabletop for small machines. Sturdy construction with smooth finish.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-wood-dark-brown.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'Cover Wood Light Brown',
+    slug: 'cover-wood-light-brown',
+    sku: 'COV-WOOD-LB',
+    price: 1399,
+    description: 'Light wooden tabletop for small machines. Natural wood grain finish adds elegance.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/cover-wood-light-brown.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+  {
+    title: 'LED Light',
+    slug: 'led-light',
+    sku: 'LED-LIGHT',
+    price: 750,
+    description: 'Clip-on LED lamp for sewing work. Adjustable brightness and flexible neck for optimal lighting.',
+    imageUrl: 'https://zamana-shop.com/wp-content/uploads/2025/03/led-light.jpg',
+    categorySlug: 'accessories',
+    featured: false,
+  },
+];
+
+async function main() {
+  // Seed categories
+  for (const cat of categories) {
+    await prisma.category.upsert({
+      where: { slug: cat.slug },
+      update: {},
+      create: cat,
+    });
+  }
+  console.log('Categories seeded');
+
+  // Seed products
+  for (const prod of products) {
+    const category = await prisma.category.findUnique({
+      where: { slug: prod.categorySlug },
+    });
+    if (!category) continue;
+
+    await prisma.product.upsert({
+      where: { slug: prod.slug },
+      update: {},
+      create: {
+        title: prod.title,
+        slug: prod.slug,
+        sku: prod.sku,
+        price: prod.price,
+        description: prod.description,
+        imageUrl: prod.imageUrl,
+        categoryId: category.id,
+        featured: prod.featured,
+      },
+    });
+  }
+  console.log('Products seeded');
+
+  const productCount = await prisma.product.count();
+  const categoryCount = await prisma.category.count();
+  console.log(`Done! ${categoryCount} categories, ${productCount} products`);
+}
+
+main()
+  .catch(console.error)
+  .finally(() => prisma.$disconnect());
